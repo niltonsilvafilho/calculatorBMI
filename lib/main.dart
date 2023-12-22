@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MyHomePage(title: 'BMI Calculator'),
+      home: const MyHomePage(title: 'BMI Calculator!'),
     );
   }
 }
@@ -35,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController controllerWeight = TextEditingController();
   TextEditingController controllerStature = TextEditingController();
   TextEditingController controllerAge = TextEditingController();
-  String resultBMI = '';
+  String resultBMI = '0';
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +71,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const SizedBox(height: 16),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: 120,
+                    width: 100,
                     child: TextFormField(
                       keyboardType: const TextInputType.numberWithOptions(),
                       controller: controllerAge,
@@ -84,9 +85,8 @@ class _MyHomePageState extends State<MyHomePage> {
                           border: UnderlineInputBorder()),
                     ),
                   ),
-                  const SizedBox(height: 16),
                   SizedBox(
-                    width: 120,
+                    width: 100,
                     child: TextFormField(
                       keyboardType: const TextInputType.numberWithOptions(),
                       controller: controllerStature,
@@ -98,10 +98,10 @@ class _MyHomePageState extends State<MyHomePage> {
                       textAlign: TextAlign.center,
                     ),
                   ),
-                  const SizedBox(height: 32),
                   SizedBox(
-                    width: 100,
+                    width: 60,
                     child: DropdownButton(
+                      itemHeight: 70,
                       value: dropdownvalueStature,
                       items: itemsStature.map((String items) {
                         return DropdownMenuItem(
@@ -120,7 +120,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               const SizedBox(height: 32),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -136,7 +136,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ],
                   ),
                   SizedBox(
-                    width: 120,
+                    width: 100,
                     child: TextFormField(
                       keyboardType: const TextInputType.numberWithOptions(),
                       controller: controllerWeight,
@@ -148,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   SizedBox(
-                    width: 100,
+                    width: 60,
                     child: DropdownButton(
                       value: dropdownvalueWeight,
                       items: itemsWeight.map((String items) {
@@ -165,6 +165,60 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ],
+              ),
+              Container(
+                width: 500,
+                height: 400,
+                child: SfRadialGauge(
+                  axes: <RadialAxis>[
+                    RadialAxis(
+                        showLabels: false,
+                        showAxisLine: false,
+                        showTicks: false,
+                        minimum: 0,
+                        maximum: 50,
+                        ranges: <GaugeRange>[
+                          GaugeRange(
+                              startValue: 0,
+                              endValue: 18.4,
+                              color: Color.fromARGB(255, 5, 41, 245),
+                              label: 'Under Weight',
+                              sizeUnit: GaugeSizeUnit.factor,
+                              labelStyle: GaugeTextStyle(
+                                  fontFamily: 'Times', fontSize: 20),
+                              startWidth: 0.65,
+                              endWidth: 0.65),
+                          GaugeRange(
+                            startValue: 18.5,
+                            endValue: 24.99,
+                            color: Color.fromARGB(255, 7, 248, 7),
+                            label: 'Healthy',
+                            labelStyle: GaugeTextStyle(
+                                fontFamily: 'Times', fontSize: 20),
+                            startWidth: 0.65,
+                            endWidth: 0.65,
+                            sizeUnit: GaugeSizeUnit.factor,
+                          ),
+                          GaugeRange(
+                            startValue: 25.0,
+                            endValue: 50,
+                            color: Color.fromARGB(255, 255, 1, 1),
+                            label: 'Overweight',
+                            labelStyle: GaugeTextStyle(
+                                fontFamily: 'Times', fontSize: 20),
+                            sizeUnit: GaugeSizeUnit.factor,
+                            startWidth: 0.65,
+                            endWidth: 0.65,
+                          ),
+                        ],
+                        pointers: <GaugePointer>[
+                          NeedlePointer(
+                            value: double.parse(resultBMI),
+                            enableAnimation: true,
+                          )
+                        ])
+                  ],
+                ),
               ),
               Text(
                 resultBMI,
@@ -193,7 +247,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           setState(() {
-            resultBMI = '';
+            resultBMI = '0';
           });
         },
         tooltip: 'clean',
