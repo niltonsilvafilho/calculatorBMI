@@ -35,6 +35,9 @@ class _MyHomePageState extends State<MyHomePage> {
   TextEditingController controllerStature = TextEditingController();
   TextEditingController controllerAge = TextEditingController();
   String resultBMI = '0';
+  double endValueHealthy = 40;
+  double endValueUnderWeight = 20;
+  double max = 60;
 
   String dropdownValueStature = 'inch';
   String dropdownValueWeight = 'lb';
@@ -98,7 +101,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget gaugeChart() {
+  Widget gaugeChart(
+      double endValueUnderWeight, double endValueHealthy, double max) {
     return SizedBox(
       width: 350,
       height: 250,
@@ -109,36 +113,27 @@ class _MyHomePageState extends State<MyHomePage> {
               showAxisLine: false,
               showTicks: false,
               minimum: 0,
-              maximum: 50,
+              maximum: max,
               ranges: <GaugeRange>[
                 GaugeRange(
                     startValue: 0,
-                    endValue: 18.5,
+                    endValue: endValueUnderWeight,
                     color: const Color.fromARGB(255, 5, 41, 245),
-                    label: 'Under Weight',
                     sizeUnit: GaugeSizeUnit.factor,
-                    labelStyle:
-                        const GaugeTextStyle(fontFamily: 'Times', fontSize: 20),
                     startWidth: 0.65,
                     endWidth: 0.65),
                 GaugeRange(
-                  startValue: 18.5,
-                  endValue: 24.99,
+                  startValue: endValueUnderWeight,
+                  endValue: endValueHealthy,
                   color: const Color.fromARGB(255, 7, 248, 7),
-                  label: 'Healthy',
-                  labelStyle:
-                      const GaugeTextStyle(fontFamily: 'Times', fontSize: 15),
+                  sizeUnit: GaugeSizeUnit.factor,
                   startWidth: 0.65,
                   endWidth: 0.65,
-                  sizeUnit: GaugeSizeUnit.factor,
                 ),
                 GaugeRange(
-                  startValue: 25.0,
-                  endValue: 50,
+                  startValue: endValueHealthy,
+                  endValue: max,
                   color: const Color.fromARGB(255, 255, 1, 1),
-                  label: 'Overweight',
-                  labelStyle:
-                      const GaugeTextStyle(fontFamily: 'Times', fontSize: 20),
                   sizeUnit: GaugeSizeUnit.factor,
                   startWidth: 0.65,
                   endWidth: 0.65,
@@ -165,7 +160,170 @@ class _MyHomePageState extends State<MyHomePage> {
   void _calculate() {
     double weight = double.parse(controllerWeight.text);
     double stature = double.parse(controllerStature.text);
+    int age = int.parse(controllerAge.text);
     double imc = weight / (stature * stature);
+
+    if (age < 15 && age >= 6) {
+      if (dropdownValueStature == 'Man') {
+        switch (age) {
+          case 6:
+            setState(() {
+              endValueUnderWeight = 14.5;
+              endValueHealthy = 16.6;
+              max = 30;
+            });
+            break;
+          case 7:
+            setState(() {
+              endValueUnderWeight = 15;
+              endValueHealthy = 17.3;
+              max = 30;
+            });
+            break;
+          case 8:
+            setState(() {
+              endValueUnderWeight = 15.6;
+              endValueHealthy = 16.7;
+              max = 30;
+            });
+            break;
+          case 9:
+            setState(() {
+              endValueUnderWeight = 16.1;
+              endValueHealthy = 18.8;
+              max = 30;
+            });
+            break;
+          case 10:
+            setState(() {
+              endValueUnderWeight = 16.7;
+              endValueHealthy = 19.6;
+              max = 30;
+            });
+            break;
+          case 11:
+            setState(() {
+              endValueUnderWeight = 17.2;
+              endValueHealthy = 20.3;
+              max = 30;
+            });
+            break;
+          case 12:
+            setState(() {
+              endValueUnderWeight = 17.8;
+              endValueHealthy = 21.1;
+              max = 30;
+            });
+            break;
+          case 13:
+            setState(() {
+              endValueUnderWeight = 18.5;
+              endValueHealthy = 21.9;
+              max = 30;
+            });
+            break;
+          case 14:
+            setState(() {
+              endValueUnderWeight = 19.2;
+              endValueHealthy = 22.7;
+              max = 30;
+            });
+            break;
+          case 15:
+            setState(() {
+              endValueUnderWeight = 19.9;
+              endValueHealthy = 23.6;
+              max = 30;
+            });
+            break;
+        }
+      } else {
+        switch (age) {
+          case 6:
+            setState(() {
+              endValueUnderWeight = 14.3;
+              endValueHealthy = 16.1;
+              max = 30;
+            });
+            break;
+          case 7:
+            setState(() {
+              endValueUnderWeight = 14.9;
+              endValueHealthy = 17.1;
+              max = 30;
+            });
+            break;
+          case 8:
+            setState(() {
+              endValueUnderWeight = 15.6;
+              endValueHealthy = 18.1;
+              max = 30;
+            });
+            break;
+          case 9:
+            setState(() {
+              endValueUnderWeight = 16.3;
+              endValueHealthy = 19.1;
+              max = 30;
+            });
+            break;
+          case 10:
+            setState(() {
+              endValueUnderWeight = 17;
+              endValueHealthy = 20.1;
+              max = 30;
+            });
+            break;
+          case 11:
+            setState(() {
+              endValueUnderWeight = 17.6;
+              endValueHealthy = 21.1;
+              max = 30;
+            });
+            break;
+          case 12:
+            setState(() {
+              endValueUnderWeight = 18.3;
+              endValueHealthy = 22.1;
+              max = 30;
+            });
+            break;
+          case 13:
+            setState(() {
+              endValueUnderWeight = 18.9;
+              endValueHealthy = 23;
+              max = 30;
+            });
+            break;
+          case 14:
+            setState(() {
+              endValueUnderWeight = 19.3;
+              endValueHealthy = 23.8;
+              max = 30;
+            });
+            break;
+          case 15:
+            setState(() {
+              endValueUnderWeight = 19.6;
+              endValueHealthy = 24.2;
+              max = 30;
+            });
+            break;
+        }
+      }
+    } else if (age < 60) {
+      setState(() {
+        endValueUnderWeight = 18.5;
+        endValueHealthy = 24.9;
+        max = 40;
+      });
+    } else {
+      setState(() {
+        endValueUnderWeight = 22.0;
+        endValueHealthy = 27.0;
+        max = 35;
+      });
+    }
 
     setState(() {
       resultBMI = imc.toStringAsFixed(2);
@@ -197,7 +355,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 customDropdownButton(listGender, "Gender", "Select To Gender"),
               ]),
               const SizedBox(height: 12),
-              gaugeChart(),
+              gaugeChart(endValueUnderWeight, endValueHealthy, max),
               titles(resultBMI),
               const SizedBox(height: 12),
               SizedBox(
